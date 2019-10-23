@@ -1,0 +1,21 @@
+App\Entity\Branch:
+    type: entity
+    table: branch
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            nullable: false
+    oneToMany:
+        managers:
+            targetEntity: App\Entity\Manager
+            mappedBy: branch
+    lifecycleCallbacks: {  }
