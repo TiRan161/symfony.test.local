@@ -1,0 +1,12 @@
+index:
+    path: /index
+    controller: App\Controller\TestController::index
+
+getData:
+    path: /getData
+    controller: App\Controller\GetDataController::getData
+
+writeBranch:
+    path: /writeBranch
+    controller: App\Controller\ManagerBaseController::writeBranch
+

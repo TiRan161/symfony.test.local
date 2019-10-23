@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Менеджеры</h1>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отдел</th>
+        </tr>
+        {% for manager in managers %}
+            <tr>
+                <td>{{ manager.id }}</td>
+                <td>{{ manager.name }}</td>
+                <td>{{ manager.surname }}</td>
+                <td>{{ manager.branch.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>Отделы</h1>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Наименование отдела</th>
+        </tr>
+        {% for branch in branches %}
+            <tr>
+                <td>{{ branch.id }}</td>
+                <td>{{ branch.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <br><br>
+    <button type="button" name="button" onclick="location.href='index'">На главную страницу</button>
+    </div>
+{% endblock %}
