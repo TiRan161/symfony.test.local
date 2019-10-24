@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Добавить базу</h1>
+    {% if app.request.attributes.get('_route') == 'write_branch' %}
+        <h1>Добавить отдел</h1>
+    {% endif %}
+    {% if app.request.attributes.get('_route') == 'edit_branch' %}
+        <h1>Редактирование отдел</h1>
+    {% endif %}
     {{ form_start(branch) }}
     {{ form_widget(branch) }}
 

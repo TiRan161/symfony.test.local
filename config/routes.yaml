@@ -2,11 +2,20 @@ index:
     path: /index
     controller: App\Controller\TestController::index
 
-getData:
-    path: /getData
+get_data:
+    path: /get-data
     controller: App\Controller\GetDataController::getData
 
-writeBranch:
-    path: /writeBranch
+write_branch:
+    path: /branch/new
     controller: App\Controller\ManagerBaseController::writeBranch
+
+edit_branch:
+    path: /branch/edit/{id}
+    controller: App\Controller\ManagerBaseController::editBranch
+
+
+write_manager:
+    path: /write-manager
+    controller: App\Controller\ManagerBaseController::writeManager
 

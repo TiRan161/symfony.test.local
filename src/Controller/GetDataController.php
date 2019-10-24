@@ -19,6 +19,8 @@ class GetDataController extends AbstractController
             'branches' => $branches,
             ]);
     }
+
+
     public function getManagers()
     {
         $managers = $this->getDoctrine()->getRepository(Manager::class)->findAll();
