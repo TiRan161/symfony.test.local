@@ -26,7 +26,7 @@ class Manager
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -44,7 +44,7 @@ class Manager
     /**
      * @return string
      */
-    public function getSurname(): string
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
@@ -62,7 +62,7 @@ class Manager
     /**
      * @return Branch
      */
-    public function getBranch(): Branch
+    public function getBranch(): ?Branch
     {
         return $this->branch;
     }

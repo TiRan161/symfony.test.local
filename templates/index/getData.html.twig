@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <h1>Менеджеры</h1>
-    <table>
+    <table class="table table-dark">
         <tr>
             <th>Номер</th>
             <th>Имя</th>
@@ -26,7 +26,7 @@
         {% for branch in branches %}
             <tr>
                 <td>{{ branch.id }}</td>
-                <td>{{ branch.name }}</td>
+                <td><a href="{{ path('edit_branch', {id: branch.id}) }}">{{ branch.name }}</a></td>
             </tr>
         {% endfor %}
     </table>
