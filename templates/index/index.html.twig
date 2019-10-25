@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Навигация</h1>
-    <a href="{{ path('get_data') }}">Посмотреть таблицы</a><br>
-    <a href="{{ path('write_branch') }}">Добавить группу</a><br>
-    <a href="{{ path('write_manager') }}">Добавить менеджера</a><br>
-
+        <h1>Навигация</h1>
+    <ul>
+        <li role="presentation" class="active"><a href="{{ path('get_data') }}">Посмотреть таблицы</a></li>
+        <li role="presentation" class="active"><a href="{{ path('write_branch') }}">Добавить отдел</a><br>
+        <li role="presentation" class="active"><a href="{{ path('write_manager') }}">Добавить менеджера</a><br>
+    </ul>
 {% endblock %}

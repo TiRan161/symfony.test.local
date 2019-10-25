@@ -14,6 +14,10 @@ edit_branch:
     path: /branch/edit/{id}
     controller: App\Controller\ManagerBaseController::editBranch
 
+delete_branch:
+    path: /branch/delete/{id}
+    controller: App\Controller\ManagerBaseController::deleteBranch
+
 
 write_manager:
     path: /write-manager
