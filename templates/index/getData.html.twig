@@ -14,6 +14,7 @@
                 <td>{{ manager.name }}</td>
                 <td>{{ manager.surname }}</td>
                 <td>{{ manager.branch.name }}</td>
+                <td><a href="{{ path('edit_manager',{id: manager.id}) }}"> Изменить </a></td>
             </tr>
         {% endfor %}
     </table>

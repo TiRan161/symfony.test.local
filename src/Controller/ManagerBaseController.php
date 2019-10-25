@@ -46,6 +46,20 @@ class ManagerBaseController extends AbstractController
         return $this->render('index/writeBranch.html.twig', ['branch' => $form->createView()]);
     }
 
+    public function editManager(Request $request, Manager $manager)
+    {
+        $form = $this->createForm(ManagerFormType::class, $manager);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($manager);
+            $em->flush();
+            return $this->redirectToRoute('get_data');
+        }
+        return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
+    }
+
 
     public function writeManager(Request $request)
     {

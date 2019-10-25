@@ -19,3 +19,7 @@ write_manager:
     path: /write-manager
     controller: App\Controller\ManagerBaseController::writeManager
 
+edit_manager:
+    path: /manager/edit/{id}
+    controller: App\Controller\ManagerBaseController::editManager
+
