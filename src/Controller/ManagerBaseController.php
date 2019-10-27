@@ -7,16 +7,13 @@ namespace App\Controller;
 use App\Entity\Branch;
 use App\Entity\Manager;
 use App\Form\BranchFormType;
-use App\Form\DeleteFormType;
 use App\Form\ManagerFormType;
-use phpDocumentor\Reflection\Location;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ManagerBaseController extends AbstractController
 {
-    public function formatBranch($request, $branch)
+    public function formatBranch($request, Branch $branch)
     {
         $form = $this->createForm(BranchFormType::class, $branch);
         $form->handleRequest($request);
@@ -42,7 +39,7 @@ class ManagerBaseController extends AbstractController
         return $this->formatBranch($request, $branch);
     }
 
-    public function formatManager($request, $manager)
+    public function formatManager($request, Manager $manager)
     {
         $form = $this->createForm(ManagerFormType::class, $manager);
         $form->handleRequest($request);
@@ -76,4 +73,16 @@ class ManagerBaseController extends AbstractController
             return $this->redirectToRoute('get_data');
 
     }
+
+    public function deleteManager(Manager $manager)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($manager);
+        $em->flush();
+        return $this->redirectToRoute('get_data');
+    }
+
+    //$this->addFlash(type,text)
+    // при добавлении менеджера уведомить весь отдел
+
 }

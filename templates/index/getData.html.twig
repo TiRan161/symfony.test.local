@@ -7,6 +7,8 @@
             <th>Имя</th>
             <th>Фамилия</th>
             <th>Отдел</th>
+            <th>Изменить запись</th>
+            <th>Удалить запись</th>
         </tr>
         {% for manager in managers %}
             <tr>
@@ -14,7 +16,9 @@
                 <td>{{ manager.name }}</td>
                 <td>{{ manager.surname }}</td>
                 <td>{{ manager.branch.name }}</td>
-                <td><a href="{{ path('edit_manager',{id: manager.id}) }}">Изменить</a></td>
+                <td><a class="text-warning" href="{{ path('edit_manager',{id: manager.id}) }}">Изменить</a></td>
+                <td><a class="text-danger" href="{{ path('delete_manager', {id: manager.id}) }}">Удалить</a></td>
+
             </tr>
         {% endfor %}
     </table>
@@ -23,18 +27,21 @@
         <tr>
             <th>Номер</th>
             <th>Наименование отдела</th>
+            <th>Изменить запись</th>
+            <th>Удалить запись</th>
         </tr>
         {% for branch in branches %}
             <tr>
                 <td>{{ branch.id }}</td>
-                <td>{{ branch.name }}</td>
+                <td><a class="text-primary"
+                       href="{{ path('brunch_managers',{name: branch.name}) }}">{{ branch.name }}</a></td>
                 <td><a class="text-warning" href="{{ path('edit_branch', {id: branch.id}) }}">Изменить</a></td>
                 <td><a class="text-danger" href="{{ path('delete_branch', {id: branch.id}) }}">Удалить</a></td>
             </tr>
         {% endfor %}
     </table>
     <div>
-        <br><br>
-    <button class = "btn btn-black" type="button" name="button" onclick="location.href='index'">На главную страницу</button>
+        <button class="btn btn-black" type="button" name="button" onclick="location.href='index'">На главную страницу
+        </button>
     </div>
 {% endblock %}
