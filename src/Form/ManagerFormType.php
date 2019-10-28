@@ -22,6 +22,7 @@ class ManagerFormType extends AbstractType
         $builder
             ->add('name', TextType::class, ['label' => 'Имя менеджера'])
             ->add('surname',TextType::class, ['label' => 'Фамилия менеджера'])
+            ->add('email', TextType::class,['label' => 'E-mail'])
             ->add('branch', EntityType::class, ['choice_label' => 'name', 'label'  => 'Отделы', 'class' => Branch::class])
             ->add('save', SubmitType::class,['label' => 'Сохранить']);
     }
