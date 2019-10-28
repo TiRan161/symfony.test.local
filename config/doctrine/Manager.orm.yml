@@ -17,6 +17,9 @@ App\Entity\Manager:
         surname:
             type: string
             nullable: false
+        email:
+            type: string
+            nullable: true
     manyToOne:
         branch:
             targetEntity: App\Entity\Branch

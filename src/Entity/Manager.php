@@ -12,6 +12,26 @@ class Manager
     private $name;
     /** @var string */
     private $surname;
+    /**@var string*/
+    private $email;
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Manager
+     */
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
     /** @var Branch */
     private $branch;
 
