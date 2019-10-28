@@ -6,6 +6,7 @@
             <th>Номер</th>
             <th>Имя</th>
             <th>Фамилия</th>
+            <th>E-mail</th>
             <th>Отдел</th>
             <th>Изменить запись</th>
             <th>Удалить запись</th>
@@ -15,6 +16,7 @@
                 <td>{{ manager.id }}</td>
                 <td>{{ manager.name }}</td>
                 <td>{{ manager.surname }}</td>
+                <td>{{ manager.email }}</td>
                 <td>{{ manager.branch.name }}</td>
                 <td><a class="text-warning" href="{{ path('edit_manager',{id: manager.id}) }}">Изменить</a></td>
                 <td><a class="text-danger" href="{{ path('delete_manager', {id: manager.id}) }}">Удалить</a></td>

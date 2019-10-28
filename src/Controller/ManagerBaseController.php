@@ -8,6 +8,8 @@ use App\Entity\Branch;
 use App\Entity\Manager;
 use App\Form\BranchFormType;
 use App\Form\ManagerFormType;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -62,7 +64,10 @@ class ManagerBaseController extends AbstractController
 
     public function writeManager(Request $request)
     {
-        return $this->formatManager($request, new Manager());
+        $manager = new Manager();
+        //$manager = $this->formatManager($request, $manager);
+        return $this->sendEmails($manager );
+
     }
 
     public function deleteBranch(Branch $branch)
@@ -80,6 +85,29 @@ class ManagerBaseController extends AbstractController
         $em->remove($manager);
         $em->flush();
         return $this->redirectToRoute('get_data');
+    }
+
+    public function sendEmails(Manager $newManager)
+    {
+        $mailer = \Swift_Mailer::class;
+        /** @var EntityRepository $managers */
+        $managers = $this->getDoctrine()->getRepository(Manager::class);
+        $managers = $managers->matching(Criteria::create()->orderBy(['branch.name' => $newManager->getBranch()])); //////////?????????????/
+        foreach ($managers as $manager) {
+            if (!null == $manager->getEmail()) {
+                $message = (new \Swift_Message('Welcome email'))
+                    ->setFrom('general@mail.ru')
+                    ->setTo($manager->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            ':Email:welcome.txt.twig',
+                            ['newManager' => $newManager]));
+
+                $mailer->send($message);
+            }
+        }
+
+
     }
 
     //$this->addFlash(type,text)
