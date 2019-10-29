@@ -8,8 +8,11 @@ use App\Entity\Branch;
 use App\Entity\Manager;
 use App\Form\BranchFormType;
 use App\Form\ManagerFormType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,8 +68,18 @@ class ManagerBaseController extends AbstractController
     public function writeManager(Request $request)
     {
         $manager = new Manager();
-        //$manager = $this->formatManager($request, $manager);
-        return $this->sendEmails($manager );
+        $form = $this->createForm(ManagerFormType::class, $manager);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($manager);
+            $em->flush();
+            $this->sendEmails($manager );
+            return $this->redirectToRoute('get_data');
+        }
+        return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
+
 
     }
 
@@ -89,25 +102,33 @@ class ManagerBaseController extends AbstractController
 
     public function sendEmails(Manager $newManager)
     {
-        $mailer = \Swift_Mailer::class;
+        //service в папке src для mailerservice
+        /** @var Swift_Mailer $mailer */
+        $mailer = Swift_Mailer::class;
         /** @var EntityRepository $managers */
         $managers = $this->getDoctrine()->getRepository(Manager::class);
-        $managers = $managers->matching(Criteria::create()->orderBy(['branch.name' => $newManager->getBranch()])); //////////?????????????/
-        foreach ($managers as $manager) {
-            if (!null == $manager->getEmail()) {
-                $message = (new \Swift_Message('Welcome email'))
-                    ->setFrom('general@mail.ru')
-                    ->setTo($manager->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            ':Email:welcome.txt.twig',
-                            ['newManager' => $newManager]));
+        /** @var ArrayCollection $managers */
+        $managers = $managers->matching(new Criteria(Criteria::expr()->andX(
+            Criteria::expr()->eq('branch', $newManager->getBranch()),
+            Criteria::expr()->neq('id', $newManager->getId()),
+            Criteria::expr()->neq('email', null)
+        ))); //////////?????????????/
 
-                $mailer->send($message);
+        $emailsArray = $managers->map(
+            static function(Manager $manager) {
+                return $manager->getEmail();
             }
-        }
-
-
+        );
+        /** @var Swift_Message $message */
+        $message = (new Swift_Message('Welcome email'))
+            ->setFrom('general@mail.ru')
+            ->setTo($emailsArray->toArray())
+            ->setBody(
+                $this->renderView(
+                    'Email/welcome.txt.twig',
+                    ['newManager' => $newManager]));
+        var_dump($message);
+        return $mailer->send($message);
     }
 
     //$this->addFlash(type,text)
