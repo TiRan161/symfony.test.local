@@ -1,6 +1,3 @@
 swiftmailer:
     url: '%env(MAILER_URL)%'
-#    url: 'MAILER_URL=://smtp.gmail.com:465?encryption=ssl&username=symfony.local.test@gmail.com&password=23051994q'
-
-
-# smtp гугловской почты , снизить уровень безопасности
+    spool: { type: 'memory' }
