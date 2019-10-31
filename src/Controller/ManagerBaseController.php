@@ -8,10 +8,13 @@ use App\Entity\Branch;
 use App\Entity\Manager;
 use App\Form\BranchFormType;
 use App\Form\ManagerFormType;
+use App\Service\MailService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Tests\Compiler\C;
 use Symfony\Component\HttpFoundation\Request;
 
 class ManagerBaseController extends AbstractController
@@ -92,10 +95,19 @@ class ManagerBaseController extends AbstractController
 
     public function deleteBranch(Branch $branch)
     {
+        $manager = $this->getDoctrine()->getRepository(Manager::class);
+        /** @var ArrayCollection $manager */
+        $manager = $manager->matching(new Criteria(Criteria::expr()->eq('branch', $branch)));
+        if (isset($manager)) {
+            $this->addFlash('notice', 'Нельзя удалить отдел в котором находятся менеджеры');
+
+        } else {
             $em = $this->getDoctrine()->getManager();
             $em->remove($branch);
             $em->flush();
-            return $this->redirectToRoute('get_data');
+        }
+
+        return $this->redirectToRoute('get_data');
 
     }
 
@@ -110,8 +122,6 @@ class ManagerBaseController extends AbstractController
     public function sendEmails(Manager $newManager, \Swift_Mailer $mailer)
     {
         //service в папке src для mailerservice
-
-
         /** @var EntityRepository $managers */
         $managers = $this->getDoctrine()->getRepository(Manager::class);
         /** @var ArrayCollection $managers */
@@ -119,15 +129,15 @@ class ManagerBaseController extends AbstractController
             Criteria::expr()->eq('branch', $newManager->getBranch()),
             Criteria::expr()->neq('id', $newManager->getId()),
             Criteria::expr()->neq('email', null)
-        ))); //////////?????????????/
+        )));
 
         $emailsArray = $managers->map(
-            static function(Manager $manager) {
+            static function (Manager $manager) {
                 return $manager->getEmail();
             }
         );
-        /** @var \Swift_Message $message */
-        $message = (new \Swift_Message('Welcome email'))
+        /** @var Swift_Message $message */
+        $message = (new Swift_Message('Welcome email'))
             ->setFrom('general@mail.ru')
             ->setTo($emailsArray->toArray())
             ->setBody(
