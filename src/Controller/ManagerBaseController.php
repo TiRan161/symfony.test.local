@@ -15,10 +15,19 @@ use Doctrine\ORM\EntityRepository;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Tests\Compiler\C;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class ManagerBaseController extends AbstractController
 {
+    /** @var MailService  */
+    private $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
+
     public function formatBranch($request, Branch $branch)
     {
         $form = $this->createForm(BranchFormType::class, $branch);
@@ -58,8 +67,16 @@ class ManagerBaseController extends AbstractController
 //        }
 //        return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
 //    }
+    /**
+     * @param Request $request
+     * @param Manager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
 
-    public function editManager(Request $request, Manager $manager, \Swift_Mailer $mailer)
+    public function editManager(Request $request, Manager $manager)
     {
         $form = $this->createForm(ManagerFormType::class, $manager);
         $form->handleRequest($request);
@@ -67,7 +84,7 @@ class ManagerBaseController extends AbstractController
             $manager = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->sendEmails($manager, $mailer);
+            $this->sendEmails($manager);
             return $this->redirectToRoute('get_data');
         }
         return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
@@ -81,11 +98,22 @@ class ManagerBaseController extends AbstractController
         $form = $this->createForm(ManagerFormType::class, $manager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $form->getData();
+            $photoFile = $form['photo']->getData();
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $path = $projectDir . '/public/uploads/photo/';
+            $publucPath = '/uploads/photo/';
+            $fileName = "{$photoFile->getFilename()}.{$photoFile->getClientOriginalExtension()}";
+            $photoFile->move($path, $fileName);
+            $a = $photoFile->getPathname();
+            $b = $photoFile->getPath();
+            $c = $photoFile->getPathInfo();
+            $d = $photoFile->getRealPath();
+            $manager->setPhoto($publucPath.$fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($manager);
             $em->flush();
-            $this->sendEmails($manager, $mailer);
+            $this->sendEmails($manager);
             return $this->redirectToRoute('get_data');
         }
         return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
@@ -98,8 +126,8 @@ class ManagerBaseController extends AbstractController
         $manager = $this->getDoctrine()->getRepository(Manager::class);
         /** @var ArrayCollection $manager */
         $manager = $manager->matching(new Criteria(Criteria::expr()->eq('branch', $branch)));
-        if (isset($manager)) {
-            $this->addFlash('notice', 'Нельзя удалить отдел в котором находятся менеджеры');
+        if (!$manager->isEmpty()) {
+            $this->addFlash('warning', 'Нельзя удалить отдел в котором находятся менеджеры');
 
         } else {
             $em = $this->getDoctrine()->getManager();
@@ -119,7 +147,14 @@ class ManagerBaseController extends AbstractController
         return $this->redirectToRoute('get_data');
     }
 
-    public function sendEmails(Manager $newManager, \Swift_Mailer $mailer)
+    /**
+     * @param Manager $newManager
+     * @return int
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    public function sendEmails(Manager $newManager)
     {
         //service в папке src для mailerservice
         /** @var EntityRepository $managers */
@@ -136,17 +171,11 @@ class ManagerBaseController extends AbstractController
                 return $manager->getEmail();
             }
         );
-        /** @var Swift_Message $message */
-        $message = (new Swift_Message('Welcome email'))
-            ->setFrom('general@mail.ru')
-            ->setTo($emailsArray->toArray())
-            ->setBody(
-                $this->renderView(
-                    'Email/welcome.txt.twig',
-                    ['newManager' => $newManager]));
-
-        var_dump($mailer);
-        return $mailer->send($message);
+        return $this->mailService->sendEmails(
+            $emailsArray,
+            'Новый сотрудник',
+            'Email/welcome.txt.twig',
+            ['newManager' => $newManager]);
     }
 
     //$this->addFlash(type,text)

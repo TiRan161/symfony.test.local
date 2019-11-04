@@ -50,4 +50,11 @@ class GetDataController extends AbstractController
         ]);
     }
 
+    public function getPersonalManager (Manager $manager)
+    {
+        return $this->render('index/personalPage.html.twig',[
+            'manager' => $manager,
+        ]);
+    }
+
 }

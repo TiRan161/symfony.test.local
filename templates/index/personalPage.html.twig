@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Персональные данные</h1>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td>{{ manager.name }}</td>
+        </tr>
+        <tr>
+            <td>Familia</td>
+            <td>{{ manager.surname}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ manager.email }}</td>
+        </tr>
+        <tr>
+            <td>Otdel</td>
+            <td>{{ manager.branch.name }}</td>
+        </tr>
+        <tr>
+            <td>Photo</td>
+            <td><img src="{{ manager.photo }}"></td>
+        </tr>
+
+    </table>
+
+{% endblock %}

@@ -4,6 +4,9 @@
 namespace App\Entity;
 
 
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class Manager
 {
     /** @var integer */
@@ -14,6 +17,26 @@ class Manager
     private $surname;
     /**@var string*/
     private $email;
+    /** @var string */
+    private $photo;
+
+    /**
+     * @return string|null
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param string $photo
+     * @return Manager
+     */
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
+        return $this;
+    }
 
     /**
      * @return string

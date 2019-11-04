@@ -4,6 +4,7 @@
     <table class="table table-dark">
         <tr>
             <th>Номер</th>
+            <th>Фото</th>
             <th>Имя</th>
             <th>Фамилия</th>
             <th>E-mail</th>
@@ -13,8 +14,11 @@
         </tr>
         {% for manager in managers %}
             <tr>
-                <td>{{ manager.id }}</td>
-                <td>{{ manager.name }}</td>
+                <td>{{ loop.index }}</td>
+                <td><img src="{{ manager.photo }}"> </td>
+                <td><a class="text-primary"
+                       href="{{ path('personal_manager',{name: manager.name}) }}">
+                        {{ manager.surname }} {{ manager.name }}</a></td>
                 <td>{{ manager.surname }}</td>
                 <td>{{ manager.email }}</td>
                 <td>{{ manager.branch.name }}</td>
@@ -34,7 +38,7 @@
         </tr>
         {% for branch in branches %}
             <tr>
-                <td>{{ branch.id }}</td>
+                <td>{{ loop.index }}</td>
                 <td><a class="text-primary"
                        href="{{ path('brunch_managers',{name: branch.name}) }}">{{ branch.name }}</a></td>
                 <td><a class="text-warning" href="{{ path('edit_branch', {id: branch.id}) }}">Изменить</a></td>

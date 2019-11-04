@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('assets/css/mdb.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}"/>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                <form>
-                {{ message }}
-                </form>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/mdb.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}"/>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        {{ message }}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+        </div>
     {% endfor %}
-        {% block body %}{% endblock %}
-        <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
-        <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('assets/js/mdb.min.js') }}"></script>
-        {% block javascripts %}{% endblock %}
-    </body>
+{% endfor %}
+{% block body %}{% endblock %}
+<script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/mdb.min.js') }}"></script>
+
+<script type="text/javascript">
+    $('#myModal').modal('show')
+</script>
+
+{% block javascripts %}{% endblock %}
+</body>
 </html>

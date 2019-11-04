@@ -20,6 +20,9 @@ App\Entity\Manager:
         email:
             type: string
             nullable: true
+        photo:
+            type: string
+            nullable: true
     manyToOne:
         branch:
             targetEntity: App\Entity\Branch

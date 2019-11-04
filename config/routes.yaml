@@ -34,3 +34,6 @@ delete_manager:
     path: /manager/delete/{id}
     controller: App\Controller\ManagerBaseController::deleteManager
 
+personal_manager:
+    path: /manager/personal/{name}
+    controller: App\Controller\GetDataController::getPersonalManager
