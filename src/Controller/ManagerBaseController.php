@@ -104,10 +104,6 @@ class ManagerBaseController extends AbstractController
             $publucPath = '/uploads/photo/';
             $fileName = "{$photoFile->getFilename()}.{$photoFile->getClientOriginalExtension()}";
             $photoFile->move($path, $fileName);
-            $a = $photoFile->getPathname();
-            $b = $photoFile->getPath();
-            $c = $photoFile->getPathInfo();
-            $d = $photoFile->getRealPath();
             $manager->setPhoto($publucPath.$fileName);
 
             $em = $this->getDoctrine()->getManager();

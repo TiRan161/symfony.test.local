@@ -15,6 +15,8 @@ class Manager
     private $name;
     /** @var string */
     private $surname;
+    /** @var string */
+    private $middleName;
     /**@var string*/
     private $email;
     /** @var string */
@@ -99,6 +101,24 @@ class Manager
     public function setSurname(string $surname): self
     {
         $this->surname = $surname;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMiddleName(): ?string
+    {
+        return $this->middleName;
+    }
+
+    /**
+     * @param string $middleName
+     * @return Manager
+     */
+    public function setMiddleName(string $middleName): self
+    {
+        $this->middleName = $middleName;
         return $this;
     }
 

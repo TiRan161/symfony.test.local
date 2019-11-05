@@ -1,28 +1,44 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Персональные данные</h1>
-    <table>
-        <tr>
-            <td>Имя</td>
-            <td>{{ manager.name }}</td>
-        </tr>
-        <tr>
-            <td>Familia</td>
-            <td>{{ manager.surname}}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{ manager.email }}</td>
-        </tr>
-        <tr>
-            <td>Otdel</td>
-            <td>{{ manager.branch.name }}</td>
-        </tr>
-        <tr>
-            <td>Photo</td>
-            <td><img src="{{ manager.photo }}"></td>
-        </tr>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-6">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Персональные данные</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <th>Имя:</th>
+                    </tr>
+                    <tr>
+                        <td>{{ manager.surname }} {{ manager.name }} {{ manager.middleName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Отдел:</th>
+                    </tr>
+                    <tr>
+                        <td>{{ manager.branch.name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="th-lg">Email:</th>
+                    </tr>
+                    <tr>
+                        <td>{{ manager.email }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-3 m-3">
+                <img class="img-thumbnail" width="300" height="400" src="{{ manager.photo }}" alt="">
+            </div>
+        </div>
+        <div>
+            <a href="{{ path('get_data') }}">
+                <button class="btn btn-lightc" type="button" name="button" >Назад</button>
+            </a>
+        </div>
+    </div>
 
-    </table>
 
 {% endblock %}
