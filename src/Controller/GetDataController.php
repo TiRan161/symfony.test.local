@@ -8,17 +8,28 @@ use App\Entity\Branch;
 use App\Entity\Manager;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Bundle\PaginatorBundle;
 
 class GetDataController extends AbstractController
 {
-    public function getData()
+    public function getData(Request $request, PaginatorInterface $paginator)
     {
         $managers = $this->getManagers();
-        $branches = $this->getBranch();
+        $branch = $this->getBranch();
+        //$paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $managers,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('index/getData.html.twig', [
+            'pagination' => $pagination,
             'managers' => $managers,
-            'branches' => $branches,
+            'branches' => $branch,
         ]);
     }
 
