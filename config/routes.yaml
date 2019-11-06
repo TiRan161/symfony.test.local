@@ -1,6 +1,6 @@
 index:
     path: /index
-    controller: App\Controller\TestController::index
+    controller: App\Controller\IndexPageController::index
 
 get_data:
     path: /get-data
@@ -8,19 +8,17 @@ get_data:
 
 write_branch:
     path: /branch/new
-    controller: App\Controller\ManagerBaseController::writeBranch
+    controller: App\Controller\BranchViewController::writeBranch
 
 edit_branch:
     path: /branch/edit/{id}
-    controller: App\Controller\ManagerBaseController::editBranch
+    controller: App\Controller\BranchViewController::editBranch
 
 delete_branch:
     path: /branch/delete/{id}
-    controller: App\Controller\ManagerBaseController::deleteBranch
+    controller: App\Controller\BranchViewController::deleteBranch
 
-brunch_managers:
-    path: /branch/{name}
-    controller: App\Controller\GetDataController::getBranchManagers
+
 
 write_manager:
     path: /write/manager
