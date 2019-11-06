@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Knp\Bundle\PaginatorBundle;
 
 class GetDataController extends AbstractController
 {
@@ -19,20 +18,17 @@ class GetDataController extends AbstractController
     {
         $managers = $this->getManagers();
         $branch = $this->getBranch();
-        //$paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $managers,
             $request->query->getInt('page', 1),
             5
         );
-
         return $this->render('index/getData.html.twig', [
             'pagination' => $pagination,
             'managers' => $managers,
             'branches' => $branch,
         ]);
     }
-
 
     public function getManagers()
     {
@@ -44,14 +40,11 @@ class GetDataController extends AbstractController
     public function getBranch()
     {
         $branch = $this->getDoctrine()->getRepository(Branch::class)->findAll();
-        //
         return $branch;
     }
 
     public function getBranchManagers(Branch $branch)
     {
-        //var_dump($branch);
-        //->where(Criteria::expr()->eq('branch',)
         $managers = $this->getDoctrine()->getRepository(Manager::class)->findBy([
             'branch' => $branch,
         ]);
@@ -61,9 +54,9 @@ class GetDataController extends AbstractController
         ]);
     }
 
-    public function getPersonalManager (Manager $manager)
+    public function getPersonalManager(Manager $manager)
     {
-        return $this->render('index/personalPage.html.twig',[
+        return $this->render('index/personalPage.html.twig', [
             'manager' => $manager,
         ]);
     }

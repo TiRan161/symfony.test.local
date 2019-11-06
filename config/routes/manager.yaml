@@ -1,0 +1,3 @@
+brunch_managers:
+  path: /branch/{name}
+  controller: App\Controller\GetDataController::getBranchManagers

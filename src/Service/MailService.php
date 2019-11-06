@@ -7,6 +7,9 @@ namespace App\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Swift_Message;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MailService
 {
@@ -27,9 +30,9 @@ class MailService
      * @param string $template
      * @param array $options
      * @return int
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function sendEmails(ArrayCollection $mailingList, $subject, $template, $options)
     {
