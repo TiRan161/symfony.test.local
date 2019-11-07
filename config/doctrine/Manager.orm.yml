@@ -11,6 +11,9 @@ App\Entity\Manager:
             generator:
                 strategy: AUTO
     fields:
+        code:
+            type: string
+            nullable: false
         name:
             type: string
             nullable: false

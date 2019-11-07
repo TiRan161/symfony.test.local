@@ -1,3 +1,15 @@
 brunch_managers:
   path: /branch/{name}
   controller: App\Controller\GetDataController::getBranchManagers
+
+write_manager:
+    path: /write/manager
+    controller: App\Controller\ManagerViewController::writeManager
+
+edit_manager:
+    path: /manager/edit/{id}
+    controller: App\Controller\ManagerViewController::editManager
+
+delete_manager:
+    path: /manager/delete/{id}
+    controller: App\Controller\ManagerViewController::deleteManager

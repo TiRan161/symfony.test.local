@@ -31,5 +31,6 @@ services:
         arguments: ['@swiftmailer.mailer.default', '@twig']
         public: true
 
-
+    App\Service\SupportService:
+        arguments: ['@doctrine.dbal.default_connection']
 

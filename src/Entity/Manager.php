@@ -12,6 +12,8 @@ class Manager
     /** @var integer */
     private $id;
     /** @var string */
+    private $code;
+    /** @var string */
     private $name;
     /** @var string */
     private $surname;
@@ -21,6 +23,24 @@ class Manager
     private $email;
     /** @var string */
     private $photo;
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     * @return Manager
+     */
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+        return $this;
+    }
 
     /**
      * @return string|null

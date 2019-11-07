@@ -4,14 +4,14 @@
 namespace App\Controller;
 
 
-use App\Service\UuidService;
+use App\Service\SupportService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexPageController extends AbstractController
 {
     private $uuid;
 
-    public function __construct(UuidService $uuid)
+    public function __construct(SupportService $uuid)
     {
         $this->uuid = $uuid;
         return $uuid;

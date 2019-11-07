@@ -20,17 +20,7 @@ delete_branch:
 
 
 
-write_manager:
-    path: /write/manager
-    controller: App\Controller\ManagerBaseController::writeManager
 
-edit_manager:
-    path: /manager/edit/{id}
-    controller: App\Controller\ManagerBaseController::editManager
-
-delete_manager:
-    path: /manager/delete/{id}
-    controller: App\Controller\ManagerBaseController::deleteManager
 
 personal_manager:
     path: /manager/personal/{name}
