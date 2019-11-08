@@ -10,7 +10,7 @@
                     </tr>
                     </thead>
                     <tr>
-                        <th>Имя:</th>
+                        <th>ФИО:</th>
                     </tr>
                     <tr>
                         <td>{{ manager.surname }} {{ manager.name }} {{ manager.middleName }}</td>
@@ -36,6 +36,12 @@
         <div>
             <a href="{{ path('get_data') }}">
                 <button class="btn btn-lightc" type="button" name="button" >Назад</button>
+            </a>
+            <a href="{{ path('edit_manager', {code: manager.code}) }}">
+                <button class="btn btn-lightc" type="button" name="button" >Изменить</button>
+            </a>
+            <a href="{{ path('delete_manager', {id: manager.id}) }}">
+                <button class="btn btn-lightc" type="button" name="button" >Удалить</button>
             </a>
         </div>
     </div>

@@ -19,6 +19,7 @@ class ManagerFormType extends AbstractType
     {
 
         $builder
+            ->add('code', TextType::class, ['mapped' => false, ''])
             ->add('photo', FileType::class, ['label' => 'Фотография', 'mapped' => false])
             ->add('name', TextType::class, ['label' => 'Имя менеджера'])
             ->add('middleName', TextType::class, ['label' => 'Отчество менеджера'])

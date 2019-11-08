@@ -7,7 +7,7 @@ write_manager:
     controller: App\Controller\ManagerViewController::writeManager
 
 edit_manager:
-    path: /manager/edit/{id}
+    path: /manager/edit/{code}
     controller: App\Controller\ManagerViewController::editManager
 
 delete_manager:

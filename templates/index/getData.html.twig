@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td><a class="text-primary"
-                       href="{{ path('personal_manager',{name: manager.name}) }}">
+                       href="{{ path('personal_manager',{code: manager.code}) }}">
                         {{ manager.surname }} {{ manager.name }} {{ manager.middleName }}</a></td>
                 <td>{{ manager.email }}</td>
                 <td><a class="text-primary"
