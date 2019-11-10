@@ -1,54 +1,67 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% form_theme manager 'foundation_5_layout.html.twig' %}
+
     {{ form_start(manager) }}
     <div class="container mt-3">
-    <div class="row">
-        <div class="col-6">
-            {% if app.request.attributes.get('_route') == 'write_manager' %}
-            <h1 class="h1">Добавить менеджера</h1>
-            {% endif %}
-            {% if app.request.attributes.get('_route') == 'edit_manager' %}
-                <h1 class="h1">Редактировать менеджера</h1>
-            {% endif %}
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th>Персональные данные</th>
-                </tr>
-                </thead>
-                <tr>
-                    <th>ФИО:</th>
-                </tr>
-                <tr>
-                    <td>{{ form_row(manager.surname, {'label': 'sadas   '})}} {{ form_row(manager.name) }} {{ form_row(manager.middleName) }}</td>
-                </tr>
-                <tr>
-                    <th>Отдел:</th>
-                </tr>
-                <tr>
-                    <td>{{ form_row(manager.branch) }}</td>
-                </tr>
-                <tr>
-                    <th class="th-lg">Email:</th>
-                </tr>
-                <tr>
-                    <td>{{ form_row(manager.email) }}</td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col-6">
+                {% if app.request.attributes.get('_route') == 'write_manager' %}
+                    <h1 class="h1">Добавить менеджера</h1>
+                {% endif %}
+                {% if app.request.attributes.get('_route') == 'edit_manager' %}
+                    <h1 class="h1">Редактировать менеджера</h1>
+                {% endif %}
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th colspan="2">Персональные данные</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <th>Фамилия:</th>
+                        <td>{{ form_widget(manager.surname, {'attr': {'class': 'form-control'}}) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Имя:</th>
+                        <td>{{ form_widget(manager.name, {'attr': {'class': 'form-control'}}) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Отчество:</th>
+                        <td>{{ form_widget(manager.middleName, {'attr': {'class': 'form-control'}}) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Отдел:</th>
+                        <td>{{ form_widget(manager.branch, {'attr': {'class': 'form-control'}}) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="th-lg">Email:</th>
+                        <td>{{ form_widget(manager.email, {'attr': {'class': 'form-control'}}) }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-3 m-3">
+                <img class="img-thumbnail" width="300" height="400" src="{{ managerPhoto }}"
+                     alt="">
+                <p>{{ form_widget(manager.photo, {'attr': {'data-default-file': 'http://symfony.test.local/uploads/photo/phpBAM1w8.jpg'}}) }}</p>
+            </div>
         </div>
-        <div class="col-3 m-3">
-            <img class="img-thumbnail" width="300" height="400" src="{{ form_row(manager) }}" alt="">
-        </div>
-    <div>
-        <a href="{{ path('personal_manager', {code: '1d1sdas'}) }}">
-            <button class="btn btn-lightc" type="button" name="button" >Отмена</button>
-        </a>
-    </div>
-    </div>
-    <h1>Добавить менеджера</h1>
+        <div class="row">
+            <div>
+                {{ form_widget(manager.save, {'attr': {'class': 'btn btn-lightc'}}) }}
+            </div>
+            <div>
+                {% if app.request.attributes.get('_route') == 'write_manager' %}
+                    <a style="color: black" href="{{ path('index', {code: managerCode}) }}">
+                        <button class="btn btn-lightc" type="button" name="button" >Отмена</button></a>
+                {% endif %}
+                {% if app.request.attributes.get('_route') == 'edit_manager' %}
+                    <a style="color: black" href="{{ path('personal_manager', {code: managerCode}) }}">
+                        <button class="btn btn-lightc" type="button" name="button" >Отмена</button></a>
+                {% endif %}
 
-    {{ form_row(manager.name) }}
-    {{ form_widget(manager)}}
+            </div>
+        </div>
+
+    </div>
     {{ form_end(manager) }}
 {% endblock %}

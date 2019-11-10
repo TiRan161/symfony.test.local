@@ -57,7 +57,9 @@ class ManagerViewController extends AbstractController
             $this->sendEmails($manager);
             return $this->redirectToRoute('get_data');
         }
-        return $this->render('index/writeManager.html.twig', ['manager' => $form->createView()]);
+        return $this->render('index/writeManager.html.twig', ['manager' => $form->createView(),
+            'managerCode' => $manager->getCode(),
+            'managerPhoto' => $manager->getPhoto()]);
     }
 
     public function deleteManager(Manager $manager)
