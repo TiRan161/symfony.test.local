@@ -30,6 +30,14 @@ class GetDataController extends AbstractController
         ]);
     }
 
+    public function getQueryManagers()
+    {
+        /** @var EntityRepository $managersRepo */
+        $em = $this->getDoctrine()->getManager();
+        $managersRepo = $em->getRepository(Manager::class);
+        $qb = $managersRepo->createQueryBuilder();
+    }
+
     public function getManagers()
     {
         /** @var EntityRepository $managersRepo */
@@ -39,7 +47,7 @@ class GetDataController extends AbstractController
 
     public function getBranch()
     {
-        $branch = $this->getDoctrine()->getRepository(Branch::class)->findAll();
+        $branch = $this->getDoctrine()->getRepository(Branch::class)->findAlTl();
         return $branch;
     }
 

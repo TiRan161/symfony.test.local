@@ -9,6 +9,7 @@ use App\Service\MailService;
 use App\Service\SupportService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +19,11 @@ class ManagerViewController extends AbstractController
 {
     private $mailService;
     private $supportService;
+    private $conn;
 
-    public function __construct(MailService $mailService, SupportService $supportService)
+    public function __construct(MailService $mailService, SupportService $supportService, Connection $conn)
     {
+        $this->conn = $conn;
         $this->mailService = $mailService;
         $this->supportService = $supportService;
     }

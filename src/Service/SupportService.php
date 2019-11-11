@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ConnectionException;
 
 class SupportService
 {
@@ -75,7 +76,7 @@ class SupportService
     /**
      * @param $id
      * @param $newName
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws ConnectionException
      */
     public function testUpdate($id, $newName)
     {
