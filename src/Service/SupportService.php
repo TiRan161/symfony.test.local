@@ -6,6 +6,8 @@ namespace App\Service;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\DBALException;
+use Exception;
 
 class SupportService
 {
@@ -53,8 +55,8 @@ class SupportService
 
     /**
      * @param array $data
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \Exception
+     * @throws DBALException
+     * @throws Exception
      */
     public function testInsert(array $data)
     {
@@ -68,7 +70,7 @@ class SupportService
             // ......
             $stmt->execute();
             $this->conn->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->conn->rollBack();
         }
     }
@@ -88,7 +90,7 @@ class SupportService
             $stmt->bindValue('name', $newName);
             $stmt->execute();
             $this->conn->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->conn->rollBack();
         }
 

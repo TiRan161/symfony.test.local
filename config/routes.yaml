@@ -24,4 +24,4 @@ delete_branch:
 
 personal_manager:
     path: /manager/personal/{code}
-    controller: App\Controller\GetDataController::getPersonalManager
+    controller: App\Controller\GetDataController::getPersonaManagerSql
