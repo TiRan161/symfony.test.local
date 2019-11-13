@@ -80,20 +80,20 @@ class GetDataController extends AbstractController
     {
         $managers = $this->getManagers();
         $branch = $this->getBranch();
-        $managersSql = $this->getManagersSql();
-        $managersId = $this->getManagersId();
+//        $managersSql = $this->getManagersSql();
+//        $managersId = $this->getManagersId();
         $pagination = $paginator->paginate(
-//            $managers,
-            $managersId,
+            $managers,
+//            $managersId,
             $request->query->getInt('page', 1),
             5
         );
-        $managersIdOnPage = $pagination->getItems();
-        $managersWithId = $this->getManagersWithId($managersIdOnPage);
+//        $managersIdOnPage = $pagination->getItems();
+//        $managersWithId = $this->getManagersWithId($managersIdOnPage);
         return $this->render('index/getData.html.twig', [
             'pagination' => $pagination,
-            'managers' => $managersWithId,
-//            'managers' => $managers,
+//            'managers' => $managersWithId,
+            'managers' => $managers,
             'branches' => $branch,
         ]);
     }

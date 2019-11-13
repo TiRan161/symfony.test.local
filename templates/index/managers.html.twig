@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Менеджеры</h1>
+    <table class="table table-dark">
+        <tr>
+            <th>Номер</th>
+            <th>ФИО</th>
+            <th>Отдел</th>
+        </tr>
+        {% for manager in managers %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a class="text-primary"
+                       href="{{ path('new_personal_manager',{code: manager.code}) }}">
+                        {{ manager.surname }} {{ manager.name }} {{ manager.middleName }}</a></td>
+                <td><a class="text-primary"
+                       href="{{ path('view_managers_by_branch',{id: manager.branch.id}) }}">{{ manager.branch.name }}</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    {% if app.request.attributes.get('_route') == 'view_all_managers' %}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination, 'Paginator/pagination.html.twig',{}, {}) }}
+        </div>
+        <div>
+            <a href="{{ path('index_new') }}">
+                <button class="btn btn-black" type="button" name="button">На главную страницу</button>
+            </a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ path('view_all_managers') }}">
+                <button class="btn btn-black" type="button" name="button">Назад</button>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}

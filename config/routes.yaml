@@ -2,6 +2,10 @@ index:
     path: /index
     controller: App\Controller\IndexPageController::index
 
+index_new:
+    path: /
+    controller: App\Controller\IndexPageController::newIndex
+
 get_data:
     path: /get-data
     controller: App\Controller\GetDataController::getData
@@ -18,11 +22,31 @@ delete_branch:
     path: /branch/delete/{id}
     controller: App\Controller\BranchViewController::deleteBranch
 
+
+
 view_all_branches:
     path: /branches
     controller: App\Controller\ViewAllBranchesController::getData
 
+view_all_managers:
+    path: /managers
+    controller: App\Controller\ViewAllManagersController::getData
 
+view_managers_by_branch:
+    path: /managers/{id}
+    controller: App\Controller\ViewAllManagersController::getManagerByBranch
+
+new_personal_manager:
+    path: /manager/{code}
+    controller: App\Controller\ViewAllManagersController::getPersonalManager
+
+new_delete_manager:
+    path: /delete/{id}
+    controller: App\Controller\ViewAllManagersController::deleteManager
+
+create_manager:
+    path: /manager/new
+    controller: App\Controller\ViewAllManagersController::createManager
 
 
 personal_manager:

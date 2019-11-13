@@ -14,4 +14,9 @@ class IndexPageController extends AbstractController
         return $this->render('index/index.html.twig');
     }
 
+    public function newIndex()
+    {
+        return $this->render('index/newIndex.html.twig');
+    }
+
 }
