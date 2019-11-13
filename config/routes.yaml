@@ -18,6 +18,9 @@ delete_branch:
     path: /branch/delete/{id}
     controller: App\Controller\BranchViewController::deleteBranch
 
+view_all_branches:
+    path: /branches
+    controller: App\Controller\ViewAllBranchesController::getData
 
 
 

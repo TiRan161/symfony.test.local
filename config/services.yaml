@@ -34,3 +34,6 @@ services:
     App\Service\SupportService:
         arguments: ['@doctrine.dbal.default_connection']
 
+    App\Service\BranchService:
+        arguments: ['@doctrine.dbal.default_connection']
+

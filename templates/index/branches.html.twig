@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Отделы</h1>
+    <table class="table table-dark">
+        <tr>
+            <th>Номер</th>
+            <th>Наименование отдела</th>
+        </tr>
+        {% for branch in branches %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+{#                    <a class="text-primary" href="{{ path('brunch_managers',{name: branch.name}) }}">#}
+                        {{ branch.name }}
+{#                    </a>#}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

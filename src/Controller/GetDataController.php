@@ -116,7 +116,6 @@ class GetDataController extends AbstractController
                 'name' => $row['name'],
                 'middleName' => $row['middleName'],
                 'email' => $row['email'],
-
                 'branch' => [
                     'id' => $row['branchId'],
                     'name' => $row['branchName'],
