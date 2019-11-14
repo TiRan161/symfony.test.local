@@ -6,9 +6,11 @@ namespace App\Controller;
 
 use App\Form\ManagerFormType;
 use App\Service\ManagerService;
+use App\Template\ManagerTemplate;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ViewAllManagersController extends AbstractController
 {
@@ -47,22 +49,30 @@ class ViewAllManagersController extends AbstractController
 
     public function getPersonalManager ($code)
     {
-        $manger = $this->managerService->getPersonalManager($code);
+        $manager = $this->managerService->getPersonalManager($code);
+        if (!$manager) {
+            throw new NotFoundHttpException();
+        }
         return $this->render('index/personalManager.html.twig',[
-            'manager' => $manger,
+            'manager' => $manager,
         ]);
     }
 
     public function createManager(Request $request)
     {
-      //$this->formManager($request);
-      return $this->render('index/newIndex.html.twig');
+      $template = (new ManagerTemplate())->getManagerTemplate();
+      return $this->render('index/newIndex.html.twig', ['template'=> $template]);
     }
 
     private function formManager(Request $request)
     {
-       // $form = $this->createForm(ManagerFormType::class);
-        //$form->handleRequest($request);
+       $form = $this->createForm(ManagerFormType::class);
+       $form->handleRequest($request);
+       $template = [
+           'name' => '',
+
+       ];
+
     }
 
     public function deleteManager($id)
