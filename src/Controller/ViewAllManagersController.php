@@ -55,13 +55,14 @@ class ViewAllManagersController extends AbstractController
 
     public function createManager(Request $request)
     {
-        return $this->formManager($request);
+      //$this->formManager($request);
+      return $this->render('index/newIndex.html.twig');
     }
 
     private function formManager(Request $request)
     {
-        $form = $this->createForm(ManagerFormType::class);
-        $form->handleRequest($request);
+       // $form = $this->createForm(ManagerFormType::class);
+        //$form->handleRequest($request);
     }
 
     public function deleteManager($id)

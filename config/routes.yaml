@@ -45,7 +45,7 @@ new_delete_manager:
     controller: App\Controller\ViewAllManagersController::deleteManager
 
 create_manager:
-    path: /manager/new
+    path: /manager/new/
     controller: App\Controller\ViewAllManagersController::createManager
 
 
