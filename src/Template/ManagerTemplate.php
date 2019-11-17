@@ -9,13 +9,18 @@ class ManagerTemplate
     public function getManagerTemplate(?array $data = null)
     {
         return [
-            'photo' => !empty($data['photo']) ?: '',
-            'name' => empty($data['name']) ? '' : $data['name'],
-            'middleName' => !empty($data['middleName']) ?: '',
-            'surname' => !empty($data['surname']) ?: '',
-            'email' => !empty($data['email']) ?: '',
-            'branch' => !empty($data['branch']['id']) ?: '',
+            'code' => $data['code'] ?? '',
+            'photo' => $data['photo'] ?? '',
+            'name' => $data['name'] ?? '',
+            'middleName' => $data['middleName'] ?? '',
+            'surname' => $data['surname'] ?? '',
+            'email' => $data['email'] ?? '',
+            'branch' => [
+                'id' => $data['branchId'] ?? '',
+                'name' => $data['branchName'] ?? '',
+            ],
         ];
     }
+
 
 }

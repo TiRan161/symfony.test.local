@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <form method="post">
+            <div class="row">
+                <div class="col-6">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th colspan="2">Персональные данные</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <th class="align-middle text-center">Фамилия:</th>
+                            <td><input class="form-control" type="text" name="surname" title="Фамилия"
+                                       value="{{ manager.surname }}"></td>
+                        <tr>
+                            <th class="align-middle text-center">Имя:</th>
+                            <td><input class="form-control" type="text" name="name" title="Имя"
+                                       value="{{ manager.name }}"></td>
+                        <tr>
+                            <th class="align-middle text-center">Отчество:</th>
+                            <td><input class="form-control" type="text" name="middleName" title="Отчество"
+                                       value="{{ manager.middleName }}"></td>
+                        <tr>
+                            <th>Отдел:</th>
+                            <td>
+                                <select name="branchList" title="Выбор отдела">
+                                    {% for key, row in manager.branchList %}
+                                        {% if row.id != manager.branch.id %}
+                                            <option value="{{ row.id }}">{{ row.name }}</option>
+                                        {% else %}
+                                            <option value="{{ row.id }}" selected> {{ row.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {{ manager.branch.name }}</td>
+                        </tr>
+                        <tr>
+                            <th class="align-middle text-center">Email:</th>
+                            <td><input class="form-control" type="text" name="email" title="E-mail"
+                                       value="{{ manager.email }}"></td>
+                        </tr>
+                    </table>
+                    <div>
+                        <input type="submit" value="Сохранить">
+                    </div>
+
+                </div>
+                <div class="col-3 m-3">
+{#                    <img class="img-thumbnail" width="300" height="400" src="{{ manager.photo }}" alt="">#}
+                    <input type="file" name="photo" title="" multiple accept="image/*,image/jpeg">
+                </div>
+            </div>
+        </form>
+        {#        <div>#}
+        {#            <a href="{{ path('view_all_managers') }}">#}
+        {#                <button class="btn btn-lightc" type="button" name="button" >Назад</button>#}
+        {#            </a>#}
+        {#            #}{#                <a href="{{ path('edit_manager', {code: manager.code}) }}">#}
+        {#            #}{#                    <button class="btn btn-lightc" type="button" name="button" >Изменить</button>#}
+        {#            #}{#                </a>#}
+        {#            <a href="{{ path('new_delete_manager', {id: manager.id}) }}">#}
+        {#                <button class="btn btn-lightc" type="button" name="button" >Удалить</button>#}
+        {#            </a>#}
+        {#        </div>#}
+    </div>
+
+
+{% endblock %}

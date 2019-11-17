@@ -5,7 +5,9 @@ namespace App\Controller;
 
 
 use App\Form\ManagerFormType;
+use App\Service\BranchService;
 use App\Service\ManagerService;
+use App\Service\SupportService;
 use App\Template\ManagerTemplate;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +18,14 @@ class ViewAllManagersController extends AbstractController
 {
 
     private $managerService;
+    private $supportService;
+    private $branchService;
 
-    public function __construct(ManagerService $managerService)
+    public function __construct(ManagerService $managerService, SupportService $supportService, BranchService $branchService)
     {
         $this->managerService = $managerService;
+        $this->supportService = $supportService;
+        $this->branchService = $branchService;
     }
 
 
@@ -33,45 +39,76 @@ class ViewAllManagersController extends AbstractController
         );
         $ids = $pagination->getItems();
         $mangers = $this->managerService->getViewAllByIds($ids);
-        return $this->render('index/managers.html.twig',[
+        return $this->render('index/managers.html.twig', [
             'pagination' => $pagination,
             'managers' => $mangers,
         ]);
     }
 
-    public function getManagerByBranch ($id)
+    public function getManagerByBranch($id)
     {
         $mangers = $this->managerService->getManagersByBranch($id);
-        return $this->render('index/managers.html.twig',[
+        return $this->render('index/managers.html.twig', [
             'managers' => $mangers,
         ]);
     }
 
-    public function getPersonalManager ($code)
+    public function getPersonalManager($code)
     {
         $manager = $this->managerService->getPersonalManager($code);
         if (!$manager) {
             throw new NotFoundHttpException();
         }
-        return $this->render('index/personalManager.html.twig',[
+        return $this->render('index/personalManager.html.twig', [
             'manager' => $manager,
         ]);
     }
 
-    public function createManager(Request $request)
+    public function updateManager(Request $request, $code)
     {
-      $template = (new ManagerTemplate())->getManagerTemplate();
-      return $this->render('index/newIndex.html.twig', ['template'=> $template]);
+        $manager = $this->managerService->getPersonalManager($code);
+        $template = (new ManagerTemplate())->getManagerTemplate($manager);
+        $template['branchList'] = $this->branchService->getAllBranch();
+        return $this->formManager($request, $template);
+
+
     }
 
-    private function formManager(Request $request)
+    public function createManager(Request $request)
     {
-       $form = $this->createForm(ManagerFormType::class);
-       $form->handleRequest($request);
-       $template = [
-           'name' => '',
+        $template = (new ManagerTemplate())->getManagerTemplate();
+        $template['branchList'] = $this->branchService->getAllBranch();
+        return $this->formManager($request, $template);
+    }
 
-       ];
+    private function formManager(Request $request, $template)
+    {
+        $code = $template['code'];
+        $new = false;
+        if (!$code) {
+            $code = $this->supportService->getUuid();
+            $new = true;
+        }
+        if ($request->getMethod() === 'POST') {
+            $data = [
+                'code' => $code,
+                'surname' => $request->get('surname'),
+                'name' => $request->get('name'),
+                'middleName' => $request->get('middleName'),
+                'email' => $request->get('email'),
+                'photo' => $request->get('photo'),
+                'branch' => $request->get('branchList'),
+            ];
+            if ($new) {
+                $this->managerService->writeManager($data);
+            } else {
+                $this->managerService->updateManager($data);
+            }
+
+            return $this->redirectToRoute('view_all_managers');
+        }
+        return $this->render('index/writePersonalManager.html.twig', ['manager' => $template]);
+
 
     }
 
@@ -80,7 +117,6 @@ class ViewAllManagersController extends AbstractController
         $this->managerService->removeManager($id);
         return $this->redirectToRoute('view_all_managers');
     }
-
 
 
 }

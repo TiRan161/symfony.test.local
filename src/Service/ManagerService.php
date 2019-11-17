@@ -5,6 +5,9 @@ namespace App\Service;
 
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
+use Exception;
+use phpDocumentor\Reflection\Types\Integer;
 
 class ManagerService
 {
@@ -72,6 +75,45 @@ class ManagerService
 
     public function writeManager(array $data)
     {
+        $this->conn->beginTransaction();
+        try{
+            $sql = 'insert into manager (code, surname, `name`, middle_name, email, photo, branch_id ) ';
+            $sql .= 'values (:code, :surname, :name, :middleName, :email, :photo, :branchId)';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue('code', $data['code']);
+            $stmt->bindValue('surname', $data['surname']);
+            $stmt->bindValue('name', $data['name']);
+            $stmt->bindValue('middleName', $data['middleName']);
+            $stmt->bindValue('photo', $data['photo']);
+            $stmt->bindValue('email', $data['email']);
+            $stmt->bindValue('branch_id', $data['branch'], ParameterType::INTEGER);
+            return $stmt->execute();
+
+        } catch (Exception $e) {
+           return $this->conn->rollBack();
+        }
+    }
+
+    public function updateManager(array $data)
+    {
+        $this->conn->beginTransaction();
+        try{
+            $sql = 'update manager set surname = :surname, name = :name, middle_name = :middleName, email = :email, ';
+            $sql .= 'photo = :photo, branch_id = :branchId where code = :code';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue('surname', $data['surname']);
+            $stmt->bindValue('name', $data['name']);
+            $stmt->bindValue('middleName', $data['middleName']);
+            $stmt->bindValue('photo', $data['photo']);
+            $stmt->bindValue('branch_id', $data['branch']);
+            $stmt->bindValue('email', $data['email']);
+            $stmt->bindValue('code', $data['code']);
+
+            return $stmt->execute();
+
+        } catch (Exception $e) {
+            return $this->conn->rollBack();
+        }
 
     }
 

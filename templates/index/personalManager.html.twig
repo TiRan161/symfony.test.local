@@ -39,9 +39,9 @@
                 <a href="{{ path('view_all_managers') }}">
                     <button class="btn btn-lightc" type="button" name="button" >Назад</button>
                 </a>
-{#                <a href="{{ path('edit_manager', {code: manager.code}) }}">#}
-{#                    <button class="btn btn-lightc" type="button" name="button" >Изменить</button>#}
-{#                </a>#}
+                <a href="{{ path('update_manager', {code: manager.code}) }}">
+                    <button class="btn btn-lightc" type="button" name="button" >Изменить</button>
+                </a>
                 <a href="{{ path('new_delete_manager', {id: manager.id}) }}">
                     <button class="btn btn-lightc" type="button" name="button" >Удалить</button>
                 </a>

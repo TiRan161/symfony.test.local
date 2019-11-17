@@ -36,6 +36,10 @@ create_manager:
     path: /manager/new
     controller: App\Controller\ViewAllManagersController::createManager
 
+update_manager:
+    path: /manager/update/{code}
+    controller: App\Controller\ViewAllManagersController::updateManager
+
 view_managers_by_branch:
     path: /managers/{id}
     controller: App\Controller\ViewAllManagersController::getManagerByBranch
@@ -47,6 +51,8 @@ new_personal_manager:
 new_delete_manager:
     path: /delete/{id}
     controller: App\Controller\ViewAllManagersController::deleteManager
+
+
 
 
 personal_manager:

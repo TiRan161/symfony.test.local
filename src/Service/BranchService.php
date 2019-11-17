@@ -30,4 +30,20 @@ class BranchService
         return $branchData;
     }
 
+    public function getBranchById($id)
+    {
+        $sql = 'select br.id as id, br.name as name from branch br where id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+        $branch = [];
+        while ($row = $stmt->fetch()){
+            $branch[] = [
+                'id'=> $row['id'],
+                'name' => $row['name'],
+            ];
+        }
+        return $branch;
+    }
+
 }
