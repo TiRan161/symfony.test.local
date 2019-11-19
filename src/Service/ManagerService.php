@@ -72,32 +72,32 @@ class ManagerService
         return true;
 
     }
-
+// добавить проверку каждого поля в массиве на пустоту!
     public function writeManager(array $data)
     {
         $this->conn->beginTransaction();
-        try{
-            $sql = 'insert into manager (code, surname, `name`, middle_name, email, photo, branch_id ) ';
-            $sql .= 'values (:code, :surname, :name, :middleName, :email, :photo, :branchId)';
+        try {
+            $sql = 'insert into manager (branch_id, code, surname, name, middle_name, email, photo) ';
+            $sql .= 'values (:branchId, :code, :surname, :name, :middleName, :email, :photo)';
             $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue('branchId', $data['branch'], ParameterType::INTEGER);
             $stmt->bindValue('code', $data['code']);
             $stmt->bindValue('surname', $data['surname']);
             $stmt->bindValue('name', $data['name']);
             $stmt->bindValue('middleName', $data['middleName']);
-            $stmt->bindValue('photo', $data['photo']);
             $stmt->bindValue('email', $data['email']);
-            $stmt->bindValue('branch_id', $data['branch'], ParameterType::INTEGER);
-            return $stmt->execute();
-
+            $stmt->bindValue('photo', $data['photo']);
+            $stmt->execute();
+            return $this->conn->commit();
         } catch (Exception $e) {
-           return $this->conn->rollBack();
+            return $this->conn->rollBack();
         }
     }
 
     public function updateManager(array $data)
     {
         $this->conn->beginTransaction();
-        try{
+        try {
             $sql = 'update manager set surname = :surname, name = :name, middle_name = :middleName, email = :email, ';
             $sql .= 'photo = :photo, branch_id = :branchId where code = :code';
             $stmt = $this->conn->prepare($sql);
@@ -105,12 +105,11 @@ class ManagerService
             $stmt->bindValue('name', $data['name']);
             $stmt->bindValue('middleName', $data['middleName']);
             $stmt->bindValue('photo', $data['photo']);
-            $stmt->bindValue('branch_id', $data['branch']);
+            $stmt->bindValue('branchId', $data['branch']);
             $stmt->bindValue('email', $data['email']);
             $stmt->bindValue('code', $data['code']);
-
-            return $stmt->execute();
-
+            $stmt->execute();
+            return $this->conn->commit();
         } catch (Exception $e) {
             return $this->conn->rollBack();
         }

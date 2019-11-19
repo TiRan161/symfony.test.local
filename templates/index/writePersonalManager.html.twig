@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container mt-3">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-6">
                     <table class="table">
@@ -43,15 +43,16 @@
                                        value="{{ manager.email }}"></td>
                         </tr>
                     </table>
+                    <div class="col-3 m-3">
+                        {#                    <img class="img-thumbnail" width="300" height="400" src="{{ manager.photo }}" alt="">#}
+                        <input type="file" name="photo" title="" multiple accept="image/*,image/jpeg">
+                    </div>
                     <div>
                         <input type="submit" value="Сохранить">
                     </div>
 
                 </div>
-                <div class="col-3 m-3">
-{#                    <img class="img-thumbnail" width="300" height="400" src="{{ manager.photo }}" alt="">#}
-                    <input type="file" name="photo" title="" multiple accept="image/*,image/jpeg">
-                </div>
+
             </div>
         </form>
         {#        <div>#}

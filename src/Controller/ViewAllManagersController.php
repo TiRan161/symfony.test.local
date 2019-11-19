@@ -77,10 +77,11 @@ class ViewAllManagersController extends AbstractController
     public function createManager(Request $request)
     {
         $template = (new ManagerTemplate())->getManagerTemplate();
+        $form = $this->createForm(ManagerFormType::class);
         $template['branchList'] = $this->branchService->getAllBranch();
         return $this->formManager($request, $template);
     }
-
+// ajax запросы
     private function formManager(Request $request, $template)
     {
         $code = $template['code'];
@@ -90,6 +91,9 @@ class ViewAllManagersController extends AbstractController
             $new = true;
         }
         if ($request->getMethod() === 'POST') {
+            $file = $request->files->get('photo');
+            $file->
+                //делаем сервис uploadService, инъектим его к managerService
             $data = [
                 'code' => $code,
                 'surname' => $request->get('surname'),
@@ -99,6 +103,7 @@ class ViewAllManagersController extends AbstractController
                 'photo' => $request->get('photo'),
                 'branch' => $request->get('branchList'),
             ];
+
             if ($new) {
                 $this->managerService->writeManager($data);
             } else {
@@ -108,8 +113,15 @@ class ViewAllManagersController extends AbstractController
             return $this->redirectToRoute('view_all_managers');
         }
         return $this->render('index/writePersonalManager.html.twig', ['manager' => $template]);
+    }
 
-
+    private function getPathPhoto($photo)
+    {
+        $path = $this->getParameter('kernel.project_dir') . '/public/uploads/photo/';
+        $publicPath = '/uploads/photo/';
+        $fileName = "{$photoFile->getFilename()}.{$photoFile->getClientOriginalExtension()}";
+        $photoFile->move($path, $fileName);
+        $manager->setPhoto($publicPath . $fileName);
     }
 
     public function deleteManager($id)
