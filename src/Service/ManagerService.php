@@ -8,14 +8,38 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Exception;
 use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\HttpFoundation\Request;
 
 class ManagerService
 {
     private $conn;
+    private $supportService;
+    private $uploadService;
 
-    public function __construct(Connection $conn)
+    public function __construct(Connection $conn, SupportService $supportService, UploadService $uploadService)
     {
         $this->conn = $conn;
+        $this->supportService = $supportService;
+        $this->uploadService = $uploadService;
+    }
+
+    public function formManager (Request $request, $template)
+    {
+        $new = false;
+        if (!$template['code']) {
+            $template['code'] = $this->supportService->getUuid();
+            $new = true;
+        }
+        if ($request->getMethod() === 'POST') {
+            foreach ($data as $key => $value) {
+                if (!$value) {
+                    $this->addFlash('warning', $key . ' пустое поле');
+                    $this->redirectToRoute('create_manager');
+                }
+            }
+
+        }
+
     }
 
     public function getViewAllByIds($ids)

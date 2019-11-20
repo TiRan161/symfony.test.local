@@ -90,19 +90,30 @@ class ViewAllManagersController extends AbstractController
             $code = $this->supportService->getUuid();
             $new = true;
         }
+        $data = $request->request->all(); //передаём в сервис
         if ($request->getMethod() === 'POST') {
+            if (empty($data['surname'])) {
+
+            }
+
             $file = $request->files->get('photo');
-            $file->
                 //делаем сервис uploadService, инъектим его к managerService
             $data = [
                 'code' => $code,
-                'surname' => $request->get('surname'),
+                'surname' => !empty($request->get('surname')),
                 'name' => $request->get('name'),
                 'middleName' => $request->get('middleName'),
                 'email' => $request->get('email'),
                 'photo' => $request->get('photo'),
                 'branch' => $request->get('branchList'),
             ];
+
+            foreach ($data as $key => $value) {
+                if (!$value) {
+                    $this->addFlash('warning', $key . ' пустое поле');
+                    $this->redirectToRoute('create_manager');
+                }
+            }
 
             if ($new) {
                 $this->managerService->writeManager($data);

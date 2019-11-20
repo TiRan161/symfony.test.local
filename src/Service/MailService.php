@@ -23,7 +23,6 @@ class MailService
         $this->template = $template;
     }
 
-
     /**
      * @param ArrayCollection $mailingList
      * @param string $subject
