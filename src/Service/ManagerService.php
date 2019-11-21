@@ -9,18 +9,52 @@ use Doctrine\DBAL\ParameterType;
 use Exception;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 class ManagerService
 {
     private $conn;
     private $supportService;
     private $uploadService;
+    private $flashBag;
 
-    public function __construct(Connection $conn, SupportService $supportService, UploadService $uploadService)
+    public function __construct(Connection $conn, SupportService $supportService, UploadService $uploadService, FlashBag $flashBag)
     {
         $this->conn = $conn;
         $this->supportService = $supportService;
         $this->uploadService = $uploadService;
+        $this->flashBag = $flashBag;
+    }
+
+    private function validData ($data)
+    {
+        if (empty($data['code'])) {
+            $this->flashBag->add('warning', 'Отсутствует уникальный идентификатор');
+        }
+        if (empty($data['surname'])) {
+            $this->flashBag->add('warning', 'Отсутствует фамилия');
+        }
+        if (empty($data['name'])) {
+            $this->flashBag->add('warning', 'Отсутствует имя');
+        }
+        if (empty($data['middleName'])) {
+            $this->flashBag->add('warning', 'Отсутствует отчество');
+        }
+        if (empty($data['email'])) {
+            $this->flashBag->add('warning', 'Отсутствует почта');
+        }
+        if (empty($data['photo'])) {
+            $this->flashBag->add('warning', 'Отсутствует фото');
+        }
+        if (empty($data['branch'])) {
+            $this->flashBag->add('warning', 'Отсутствует отдел');
+        }
+        return true;
+    }
+
+    private function getFormData ($request)
+    {
+
     }
 
     public function formManager (Request $request, $template)
@@ -31,13 +65,10 @@ class ManagerService
             $new = true;
         }
         if ($request->getMethod() === 'POST') {
-            foreach ($data as $key => $value) {
-                if (!$value) {
-                    $this->addFlash('warning', $key . ' пустое поле');
-                    $this->redirectToRoute('create_manager');
-                }
-            }
+            $valid = $this->validData($request->request->all());
+            if ($valid) {
 
+            }
         }
 
     }

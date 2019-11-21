@@ -92,7 +92,25 @@ class ViewAllManagersController extends AbstractController
         }
         $data = $request->request->all(); //передаём в сервис
         if ($request->getMethod() === 'POST') {
+            if (empty($data['code'])) {
+
+            }
             if (empty($data['surname'])) {
+
+            }
+            if (empty($data['name'])) {
+
+            }
+            if (empty($data['middleName'])) {
+
+            }
+            if (empty($data['email'])) {
+
+            }
+            if (empty($data['photo'])) {
+
+            }
+            if (empty($data['branch'])) {
 
             }
 
