@@ -37,3 +37,6 @@ services:
     App\Service\BranchService:
         arguments: ['@doctrine.dbal.default_connection']
 
+    App\Service\ManagerService:
+        arguments: ['@doctrine.dbal.default_connection','','','@session.flash_bag']
+

@@ -7,7 +7,9 @@ namespace App\Service;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Exception;
+use phpDocumentor\Reflection\Location;
 use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
@@ -28,11 +30,13 @@ class ManagerService
 
     private function validData ($data)
     {
-        if (empty($data['code'])) {
-            $this->flashBag->add('warning', 'Отсутствует уникальный идентификатор');
-        }
+//        if (empty($data['code'])) {
+//            $this->flashBag->add('warning', 'Отсутствует уникальный идентификатор');
+//
+//        }
         if (empty($data['surname'])) {
-            $this->flashBag->add('warning', 'Отсутствует фамилия');
+            $flashList[] = 'Отсутствует фамилия';
+//            $this->flashBag->add('warning', 'Отсутствует фамилия');
         }
         if (empty($data['name'])) {
             $this->flashBag->add('warning', 'Отсутствует имя');
