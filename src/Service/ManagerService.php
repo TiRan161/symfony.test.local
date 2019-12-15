@@ -23,24 +23,24 @@ class ManagerService
         $this->uploadService = $uploadService;
     }
 
-    public function formManager (Request $request, $template)
-    {
-        $new = false;
-        if (!$template['code']) {
-            $template['code'] = $this->supportService->getUuid();
-            $new = true;
-        }
-        if ($request->getMethod() === 'POST') {
-            foreach ($data as $key => $value) {
-                if (!$value) {
-                    $this->addFlash('warning', $key . ' пустое поле');
-                    $this->redirectToRoute('create_manager');
-                }
-            }
-
-        }
-
-    }
+//    public function formManager (Request $request, $template)
+//    {
+//        $new = false;
+//        if (!$template['code']) {
+//            $template['code'] = $this->supportService->getUuid();
+//            $new = true;
+//        }
+//        if ($request->getMethod() === 'POST') {
+//            foreach ($data as $key => $value) {
+//                if (!$value) {
+//                    $this->addFlash('warning', $key . ' пустое поле');
+//                    $this->redirectToRoute('create_manager');
+//                }
+//            }
+//
+//        }
+//
+//    }
 
     public function getViewAllByIds($ids)
     {

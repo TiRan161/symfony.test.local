@@ -23,6 +23,8 @@ class Manager
     private $email;
     /** @var string */
     private $photo;
+    /** @var string */
+    private $vkId;
 
     /**
      * @return string
@@ -160,6 +162,25 @@ class Manager
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getVkId(): ?string
+    {
+        return $this->vkId;
+    }
+
+    /**
+     * @param string $vkId
+     * @return Manager
+     */
+    public function setVkId(string $vkId): self
+    {
+        $this->vkId = $vkId;
+        return $this;
+    }
+
 
 
 

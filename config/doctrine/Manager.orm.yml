@@ -29,6 +29,9 @@ App\Entity\Manager:
         photo:
             type: string
             nullable: true
+        vkId:
+            type: string
+            nullable: true
     manyToOne:
         branch:
             targetEntity: App\Entity\Branch

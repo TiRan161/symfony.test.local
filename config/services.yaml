@@ -37,3 +37,6 @@ services:
     App\Service\BranchService:
         arguments: ['@doctrine.dbal.default_connection']
 
+    App\Service\VkApiService:
+        arguments: ['%env(VK_API_KEY)%']
+

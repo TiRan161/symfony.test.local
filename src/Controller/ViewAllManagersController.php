@@ -8,6 +8,7 @@ use App\Form\ManagerFormType;
 use App\Service\BranchService;
 use App\Service\ManagerService;
 use App\Service\SupportService;
+use App\Service\VkApiService;
 use App\Template\ManagerTemplate;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,9 +21,12 @@ class ViewAllManagersController extends AbstractController
     private $managerService;
     private $supportService;
     private $branchService;
+    private $vkApiService;
 
-    public function __construct(ManagerService $managerService, SupportService $supportService, BranchService $branchService)
+    public function __construct(ManagerService $managerService, SupportService $supportService,
+                                BranchService $branchService, VkApiService $vkApiService)
     {
+        $this->vkApiService = $vkApiService;
         $this->managerService = $managerService;
         $this->supportService = $supportService;
         $this->branchService = $branchService;
@@ -31,6 +35,8 @@ class ViewAllManagersController extends AbstractController
 
     public function getData(Request $request, PaginatorInterface $paginator)
     {
+        $this->vkApiService->sendMessage();
+        die();
         $listId = $this->managerService->getIds();
         $pagination = $paginator->paginate(
             $listId,
