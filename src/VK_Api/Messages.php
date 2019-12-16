@@ -43,6 +43,8 @@ class Messages
             'access_token' => $this->token,
 
         ];
+        $response = $client->request('POST', 'https://api.vk.com/method/messages.send', $params);
+        return $params;
 
         $data['method'] = '/messages.send';
         $client = new \GuzzleHttp\Client();
