@@ -40,3 +40,6 @@ services:
     App\Service\VkApiService:
         arguments: ['%env(VK_API_KEY)%']
 
+    App\Service\ManagerService:
+        arguments: ['@doctrine.dbal.default_connection','','','@session.flash_bag']
+
