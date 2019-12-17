@@ -6,20 +6,20 @@ namespace App\VK_Api;
 
 class Messages
 {
-    private $token;
-    private $version;
+    private $token = '8c49b8151dc2257c983866a08e59782e416fa0cc0f9b5efe21b65933746baea6dece0945eb629d5260b9c';
+    private $version = '5.103';
 
-    public function __construct($token, $version)
+    public function __construct()
     {
-        $this->token = $token;
-        $this->version = $version;
+//        $this->token = $token;
+//        $this->version = $version;
     }
 
 
     public function sendMessage(?array $params = null)
     {
 
-        $params = [
+        $params['form_params'] = [
             'user_id' => $params['user_id'] ?? '',
             'random_id' => $params['random_id'] ?? '',
             'peer_id' => $params['peer_id'] ?? '',
@@ -43,7 +43,8 @@ class Messages
             'access_token' => $this->token,
 
         ];
-        $response = $client->request('POST', 'https://api.vk.com/method/messages.send', $params);
+        //$client = new \GuzzleHttp\Client();
+        //$response = $client->request('POST', 'https://api.vk.com/method/messages.send', $params);
         return $params;
 
         $data['method'] = '/messages.send';
