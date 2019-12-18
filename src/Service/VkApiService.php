@@ -5,6 +5,8 @@ namespace App\Service;
 
 
 use App\Vk\Api\AbstractMethod;
+use App\Vk\Api\Groups\GetMembers;
+use App\Vk\Api\Messages\SetActivity;
 use App\Vk\Api\SendMessage;
 use App\Vk\Api\SetAction;
 use App\VK_Api\Messages;
@@ -28,12 +30,17 @@ class VkApiService
 
     public function sendMessage()
     {
-        $sendClass = new SetAction();
-        $sendClass->setUserId();
-//        $sendClass->setMessage('Привет');
-        $sendClass->setUserId('27727178');
+        $typingClass = new SetActivity();
+        $typingClass->setUserId(SetActivity::TYPE_TYPING);
+        $sendClass = new GetMembers();
+        //$sendClass->setMessage('Привет');
+        //$sendClass->setUserId('27727178');
+        $sendClass->setGroupId('189861095');
+        //var_dump($sendClass->getResponse($sendClass->getRequest()));
 
         $result = $this->executorApiMethods($sendClass);
+
+        var_dump((json_decode($result->getBody())));
 
 
 //        $params = (new Messages())->sendMessage();
