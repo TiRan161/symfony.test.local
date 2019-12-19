@@ -1,2 +1,10 @@
 {% extends 'base.html.twig' %}
+{% block body %}
+    <form method="POST" action="{{ path('message') }}" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <button type="submit" class="btn btn-primary">OK</button>
 
+    </form>
+{{ form_widget(message) }}
+
+{% endblock %}

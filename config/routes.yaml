@@ -6,6 +6,10 @@ index_new:
     path: /
     controller: App\Controller\IndexPageController::newIndex
 
+message:
+    path: /message
+    controller: App\Controller\MessageController::send
+
 get_data:
     path: /get-data
     controller: App\Controller\GetDataController::getData
