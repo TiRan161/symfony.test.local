@@ -7,6 +7,8 @@ namespace App\Service;
 use App\Vk\Api\AbstractMethod;
 use App\Vk\Api\Groups\GetMembers;
 use App\Vk\Api\Messages\SetActivity;
+use App\Vk\Api\Photos\GetMessagesUploadServer;
+use App\Vk\Api\Photos\SendFileToServer;
 use App\Vk\Api\SendMessage;
 use App\Vk\Api\SetAction;
 
@@ -27,8 +29,25 @@ class VkApiService
         return $method->getResult();
     }
 
-    public function sendMessage()
+    public function sendMessage($file)
     {
+        $upload = new GetMessagesUploadServer();
+        $upload->setPeerId('27727178');
+        $result = $this->executorApiMethods($upload);
+        var_dump((json_decode($result->getBody())));
+        $uploadBody = json_decode($result->getBody());
+        $url = $uploadBody->response->upload_url;
+
+        $sendFile = new SendFileToServer();
+        $sendFile->setUrl($url);
+        $sendFile->setPhoto($file);
+        var_dump($sendFile);
+        $result = $this->executorApiMethods($sendFile);
+        var_dump((json_decode($result->getBody())));
+
+
+        die();
+
         $typingClass = new SetActivity();
 
         $sendClass = new SetActivity();
@@ -40,7 +59,7 @@ class VkApiService
 
         $result = $this->executorApiMethods($sendClass);
 
-        var_dump((json_decode($result->getBody())));
+        //var_dump((json_decode($result->getBody())));
 
 
 //        $params = (new Messages())->sendMessage();

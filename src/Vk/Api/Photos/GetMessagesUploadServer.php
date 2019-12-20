@@ -21,7 +21,7 @@ class GetMessagesUploadServer extends AbstractMethod
     public function getParams()
     {
         return [
-          'peer_id' => $this->peerId,
+            'peer_id' => $this->peerId,
         ];
 
         // TODO: Implement getParams() method.
