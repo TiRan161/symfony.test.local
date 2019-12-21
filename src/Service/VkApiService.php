@@ -7,9 +7,10 @@ namespace App\Service;
 use App\Vk\Api\AbstractMethod;
 use App\Vk\Api\Groups\GetMembers;
 use App\Vk\Api\Messages\SetActivity;
+use App\Vk\Api\Photos\GetMessagesUploadServer;
+use App\Vk\Api\Photos\SendFileToServer;
 use App\Vk\Api\SendMessage;
 use App\Vk\Api\SetAction;
-use App\VK_Api\Messages;
 
 class VkApiService
 {
@@ -28,19 +29,37 @@ class VkApiService
         return $method->getResult();
     }
 
-    public function sendMessage()
+    public function sendMessage($file)
     {
+        $upload = new GetMessagesUploadServer();
+        $upload->setPeerId('27727178');
+        $result = $this->executorApiMethods($upload);
+        var_dump((json_decode($result->getBody())));
+        $uploadBody = json_decode($result->getBody());
+        $url = $uploadBody->response->upload_url;
+
+        $sendFile = new SendFileToServer();
+        $sendFile->setUrl($url);
+        $sendFile->setPhoto($file);
+        var_dump($sendFile);
+        $result = $this->executorApiMethods($sendFile);
+        var_dump((json_decode($result->getBody())));
+
+
+        die();
+
         $typingClass = new SetActivity();
-        $typingClass->setUserId(SetActivity::TYPE_TYPING);
-        $sendClass = new GetMembers();
+
+        $sendClass = new SetActivity();
         //$sendClass->setMessage('Привет');
-        //$sendClass->setUserId('27727178');
-        $sendClass->setGroupId('189861095');
+        $sendClass->setUserId('27727178');
+        $sendClass->setType(SetActivity::TYPE_AUDIO);
+//        $sendClass->setGroupId('189861095');
         //var_dump($sendClass->getResponse($sendClass->getRequest()));
 
         $result = $this->executorApiMethods($sendClass);
 
-        var_dump((json_decode($result->getBody())));
+        //var_dump((json_decode($result->getBody())));
 
 
 //        $params = (new Messages())->sendMessage();

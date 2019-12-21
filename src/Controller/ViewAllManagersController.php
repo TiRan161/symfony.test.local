@@ -150,14 +150,14 @@ class ViewAllManagersController extends AbstractController
         return $this->render('index/writePersonalManager.html.twig', ['manager' => $template]);
     }
 
-    private function getPathPhoto($photo)
-    {
-        $path = $this->getParameter('kernel.project_dir') . '/public/uploads/photo/';
-        $publicPath = '/uploads/photo/';
-        $fileName = "{$photoFile->getFilename()}.{$photoFile->getClientOriginalExtension()}";
-        $photoFile->move($path, $fileName);
-        $manager->setPhoto($publicPath . $fileName);
-    }
+//    private function getPathPhoto($photo)
+//    {
+//        $path = $this->getParameter('kernel.project_dir') . '/public/uploads/photo/';
+//        $publicPath = '/uploads/photo/';
+//        $fileName = "{$photo->getFilename()}.{$photo->getClientOriginalExtension()}";
+//        $photo->move($path, $fileName);
+//        $manager->setPhoto($publicPath . $fileName);
+//    }
 
     public function deleteManager($id)
     {

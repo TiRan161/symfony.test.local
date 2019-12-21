@@ -9,7 +9,7 @@ use App\Vk\Api\AbstractMethod;
 class SetActivity extends AbstractMethod
 {
     const TYPE_TYPING = 'typing';
-    const TYPE_AUDIO = 'aodio';
+    const TYPE_AUDIO = 'audiomessage';
 
     const TYPE_LIST = [
         self::TYPE_TYPING,
