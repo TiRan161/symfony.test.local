@@ -3,10 +3,13 @@
 {% block body %}
     <h1>Навигация</h1>
     <ul>
-        <li role="presentation" class="active"><a href="{{ path('view_all_managers') }}">Посмотреть менеджеров</a></li>
-        <li role="presentation" class="active"><a href="{{ path('view_all_branches') }}">Посмотреть отделы</a></li>
-        <li role="presentation" class="active"><a href="{{ path('write_branch') }}">Добавить отдел</a><br>
-        <li role="presentation" class="active"><a href="{{ path('create_manager') }}">Добавить менеджера</a><br>
+        <li role="presentation" class="active"><a href="{{ path('doctrine_index') }}">Доктрины</a></li>
+        <li role="presentation" class="active"><a href="{{ path('native_index') }}">Нативно</a></li>
+
+{#        <li role="presentation" class="active"><a href="{{ path('view_all_managers') }}">Посмотреть менеджеров</a></li>#}
+{#        <li role="presentation" class="active"><a href="{{ path('view_all_branches') }}">Посмотреть отделы</a></li>#}
+{#        <li role="presentation" class="active"><a href="{{ path('write_branch') }}">Добавить отдел</a><br>#}
+{#        <li role="presentation" class="active"><a href="{{ path('create_manager') }}">Добавить менеджера</a><br>#}
     </ul>
 
 {% endblock %}

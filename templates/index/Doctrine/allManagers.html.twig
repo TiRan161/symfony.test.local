@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Менеджеры</h1>
+    <table class="table table-dark">
+        <tr>
+            <th>Номер</th>
+            <th>ФИО</th>
+            <th>E-mail</th>
+            <th>Отдел</th>
+        </tr>
+        </tr>
+        {% for manager in managers %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a class="text-primary"
+                       href="{{ path('personal_manager',{code: manager.code}) }}">
+                        {{ manager.surname }} {{ manager.name }} {{ manager.middleName }}</a></td>
+                <td>{{ manager.email }}</td>
+                <td><a class="text-primary"
+                       href="{{ path('brunch_managers',{name: manager.branch.name}) }}">{{ manager.branch.name }}</a></td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination, 'Paginator/pagination.html.twig',{}, {}) }}
+    </div>
+    <h1>Отделы</h1>
+    <table class="table table-dark">
+        <tr>
+            <th>Номер</th>
+            <th>Наименование отдела</th>
+            <th>Изменить запись</th>
+            <th>Удалить запись</th>
+        </tr>
+        {% for branch in branches %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><a class="text-primary"
+                       href="{{ path('brunch_managers',{name: branch.name}) }}">{{ branch.name }}</a></td>
+                <td><a class="text-warning" href="{{ path('edit_branch', {id: branch.id}) }}">Изменить</a></td>
+                <td><a class="text-danger" href="{{ path('delete_branch', {id: branch.id}) }}">Удалить</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <button class="btn btn-black" type="button" name="button" onclick="location.href='index'">На главную страницу
+        </button>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Навигация</h1>
+    <ul>
+        <li role="presentation" class="active"><a href="{{ path('doctrine_all_managers') }}">Посмотреть таблицы</a></li>
+        <li role="presentation" class="active"><a href="{{ path('write_branch') }}">Добавить отдел</a><br>
+        <li role="presentation" class="active"><a href="{{ path('write_manager') }}">Добавить менеджера</a><br>
+    </ul>
+{% endblock %}

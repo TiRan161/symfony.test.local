@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Form\MessagesFormType;
 use App\Service\VkApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class MessageController extends AbstractController
@@ -24,7 +25,12 @@ class MessageController extends AbstractController
         $form = $this->createForm(MessagesFormType::class);
         $form->handleRequest($request);
         if ($request->getMethod()==='POST') {
-            $message = $request->files->get('image');
+            /** @var UploadedFile $messages */
+            $messages = $request->files->get('image');
+            $message['multipart'] = [
+                'name' => $messages->getFilename(),
+                'content' => fopen($messages->getPathname().'.'.$messages->getClientOriginalExtension(),'r'),
+                ];
             $this->vkApiService->sendMessage($message);
 
         }

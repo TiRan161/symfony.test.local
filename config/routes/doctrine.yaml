@@ -1,0 +1,7 @@
+doctrine_index:
+  path: /doctrine/index
+  controller: App\Controller\Doctrine\IndexController::index
+
+doctrine_all_managers:
+  path: /doctrine/managers
+  controller: App\Controller\Doctrine\AllManagersController::getData

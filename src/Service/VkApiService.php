@@ -34,15 +34,14 @@ class VkApiService
         $upload = new GetMessagesUploadServer();
         $upload->setPeerId('27727178');
         $result = $this->executorApiMethods($upload);
-        var_dump((json_decode($result->getBody())));
         $uploadBody = json_decode($result->getBody());
         $url = $uploadBody->response->upload_url;
 
         $sendFile = new SendFileToServer();
         $sendFile->setUrl($url);
         $sendFile->setPhoto($file);
-        var_dump($sendFile);
-        $result = $this->executorApiMethods($sendFile);
+        $result = $sendFile->getResponse($sendFile->getRequest());
+        //$result = $this->executorApiMethods($sendFile);
         var_dump((json_decode($result->getBody())));
 
 

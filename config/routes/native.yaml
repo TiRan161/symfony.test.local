@@ -1,0 +1,7 @@
+native_index:
+  path: /native/index
+  controller: App\Controller\Native\IndexController::index
+
+native_all_managers:
+  path: /native/managers
+  controller: App\Controller\Native\AllManagersController::getData

@@ -52,9 +52,6 @@ abstract class AbstractMethod
         } else {
             throw new HttpException('Method not exist');
         }
-        $request = $client->request($this->method, $this->host . $this->url, $options);
-        var_dump($request);
-
         return $client->request($this->method, $this->host . $this->url, $options);
 
 
@@ -66,8 +63,6 @@ abstract class AbstractMethod
         }
         $body = $response->getBody();
         $data = json_decode($body);
-
-        var_dump($data);
 
         if (!empty($data->error)) {
             throw new \LogicException($data->error->error_msg, $data->error->error_code);
