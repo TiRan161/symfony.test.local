@@ -19,11 +19,8 @@ class AllManagersController extends AbstractController
     {
         $managers = $this->getManagers();
         $branch = $this->getBranch();
-//        $managersSql = $this->getManagersSql();
-//        $managersId = $this->getManagersId();
         $pagination = $paginator->paginate(
             $managers,
-//            $managersId,
             $request->query->getInt('page', 1),
             5
         );
