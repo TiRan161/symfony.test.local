@@ -66,3 +66,8 @@ new_delete_manager:
 personal_manager:
     path: /manager/personal/{code}
     controller: App\Controller\GetDataController::getPersonaManagerSql
+
+
+set_activity:
+    path: /set-activity
+    controller: App\Controller\MessageController::setActivity

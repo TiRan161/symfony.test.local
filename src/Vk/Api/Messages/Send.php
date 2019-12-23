@@ -47,6 +47,9 @@ class Send extends AbstractMethod
         if (null !== $this->message) {
             $params['message'] = $this->message;
         }
+        if (null !== $this->attachment) {
+            $params['attachment'] = $this->attachment;
+        }
         return $params;
     }
 
@@ -77,5 +80,15 @@ class Send extends AbstractMethod
         }
         $this->userIds = $listId;
     }
+
+    /**
+     * @param mixed $attachment
+     */
+    public function setAttachment($attachment): void
+    {
+
+        $this->attachment = $attachment;
+    }
+
 
 }
