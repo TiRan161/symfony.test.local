@@ -52,4 +52,12 @@ class SetActivity extends AbstractMethod
         }
     }
 
+    /**
+     * @param mixed $groupId
+     */
+    public function setGroupId($groupId): void
+    {
+        $this->groupId = $groupId;
+    }
+
 }

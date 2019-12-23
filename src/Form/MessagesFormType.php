@@ -16,7 +16,7 @@ class MessagesFormType extends AbstractType
     {
         $builder
             ->add('message', TextType::class, ['label' => 'Сообщение'])
-            ->add('imgFile', FileType::class, ['label' => 'Фото'])
+            ->add('photo', FileType::class, ['label' => 'Фото'])
             ->add('submit', SubmitType::class, ['label' => 'Сохранить']);
     }
 

@@ -1,10 +1,41 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <form method="POST" action="{{ path('message') }}" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <button type="submit" class="btn btn-primary">OK</button>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="photo">
+        <textarea name="message" aria-label="" id="area" style="width: 400px; height: 400px" ></textarea>
+        <textarea id="tyingBox" tabindex="1" placeholder="Enter Message"></textarea>
+        <p class="content">Text will be replace here and after Stop typing it will get back</p>
+{#        <input type="text" name="message" title="" id="input" onkeydown="set_width()">#}
+        <button type="submit" name="submit" class="btn btn-primary">OK</button>
 
     </form>
-{{ form_widget(message) }}
+    {#{{ form_widget(message) }}#}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var typingTimer;
+        var doneTypingInterval = 10;
+        var finaldoneTypingInterval = 500;
+
+        var oldData = $("p.content").html();
+        $('#tyingBox').keydown(function() {
+            clearTimeout(typingTimer);
+            if ($('#tyingBox').val) {
+                typingTimer = setTimeout(function() {
+                    $("p.content").html('Typing...');
+                }, doneTypingInterval);
+            }
+        });
+
+        $('#tyingBox').keyup(function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                $("p.content").html(oldData);
+            }, finaldoneTypingInterval);
+        });
+    </script>
+
 
 {% endblock %}

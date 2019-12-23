@@ -20,18 +20,23 @@ class MessageController extends AbstractController
         $this->vkApiService = $vkApiService;
     }
 
-    public function send (Request $request) {
+    public function send(Request $request)
+    {
 
         $form = $this->createForm(MessagesFormType::class);
         $form->handleRequest($request);
-        if ($request->getMethod()==='POST') {
-            /** @var UploadedFile $messages */
-            $messages = $request->files->get('image');
-            $message['multipart'] = [
-                'name' => $messages->getFilename(),
-                'content' => fopen($messages->getPathname().'.'.$messages->getClientOriginalExtension(),'r'),
-                ];
+        $data = $request->request->all();
+        $this->vkApiService->setActivity();
+        if ($request->getMethod() === 'POST') {
+            $message = $data['message'];
+//            /** @var UploadedFile $messages */
+//            $messages = $request->files->get('image');
+//            $message['multipart'] = [
+//                'name' => $messages->getFilename(),
+//                'content' => fopen($messages->getPathname().'.'.$messages->getClientOriginalExtension(),'r'),
+//                ];
             $this->vkApiService->sendMessage($message);
+//            $this->vkApiService->getGroupMembers('189861095');
 
         }
         return $this->render('VkApi/sendMessages.html.twig', ['message' => $form->createView()]);

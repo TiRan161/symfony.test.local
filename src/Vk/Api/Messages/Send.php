@@ -4,7 +4,9 @@
 namespace App\Vk\Api\Messages;
 
 
-class Send
+use App\Vk\Api\AbstractMethod;
+
+class Send extends AbstractMethod
 {
     protected $url = '/method/messages.send';
 
@@ -33,11 +35,19 @@ class Send
      */
     public function getParams()
     {
-        return [
+        $params = [
             'random_id' => (new \DateTime())->getTimestamp(),
-            "user_id" => $this->userId,
-            'message' => $this->message
         ];
+        if (null !== $this->userId) {
+            $params['user_id'] = $this->userId;
+        }
+        if (null !== $this->userIds) {
+            $params['user_ids'] = $this->userIds;
+        }
+        if (null !== $this->message) {
+            $params['message'] = $this->message;
+        }
+        return $params;
     }
 
     /**
@@ -54,6 +64,18 @@ class Send
     public function setMessage($message): void
     {
         $this->message = $message;
+    }
+
+    /**
+     * @param mixed $userIds
+     */
+    public function setUserIds($userIds): void
+    {
+        $listId = '';
+        foreach ($userIds as $key => $value) {
+            $listId .= $value . ',';
+        }
+        $this->userIds = $listId;
     }
 
 }
