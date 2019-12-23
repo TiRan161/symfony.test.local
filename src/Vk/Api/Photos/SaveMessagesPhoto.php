@@ -8,7 +8,7 @@ use App\Vk\Api\AbstractMethod;
 
 class SaveMessagesPhoto extends AbstractMethod
 {
-    protected $url = '/method/saveMessagesPhoto';
+    protected $url = '/method/photos.saveMessagesPhoto';
 
     private $photo;
     private $server;

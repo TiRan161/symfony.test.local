@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <h1 id="test_head">Привет</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="file" name="photo">
         <textarea name="message" aria-label="" id="area" style="width: 400px; height: 400px" ></textarea>
@@ -10,31 +11,33 @@
 
     </form>
     {#{{ form_widget(message) }}#}
+    <button type="button" class="btn btn-dark-green" onclick="setActivity()">SendTest</button>
 
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        var typingTimer;
-        var doneTypingInterval = 10;
-        var finaldoneTypingInterval = 500;
-
-        var oldData = $("p.content").html();
-        $('#tyingBox').keydown(function() {
-            clearTimeout(typingTimer);
-            if ($('#tyingBox').val) {
-                typingTimer = setTimeout(function() {
-                    $("p.content").html('Typing...');
-                }, doneTypingInterval);
-            }
-        });
 
         $('#tyingBox').keyup(function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(function() {
-                $("p.content").html(oldData);
-            }, finaldoneTypingInterval);
+            setActivity();
         });
+    </script>
+
+    <script>
+        function setActivity() {
+            console.log("111111");
+            $.ajax({
+                url: '/set-activity',
+                method: 'GET',
+                data: {}
+            })
+            .done(function (data) {
+                console.log(data);
+                $('#test_head').html(data.message);
+
+            })
+
+        }
     </script>
 
 

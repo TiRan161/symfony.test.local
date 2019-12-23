@@ -9,6 +9,7 @@ use App\Vk\Api\Groups\GetMembers;
 use App\Vk\Api\Messages\Send;
 use App\Vk\Api\Messages\SetActivity;
 use App\Vk\Api\Photos\GetMessagesUploadServer;
+use App\Vk\Api\Photos\SaveMessagesPhoto;
 use App\Vk\Api\Photos\SendFileToServer;
 use App\Vk\Api\SendMessage;
 use App\Vk\Api\SetAction;
@@ -31,29 +32,48 @@ class VkApiService
         return $method->getResult();
     }
 
-    public function sendMessage($message)
+    public function sendMessage($file)
     {
-        $sendMessage = new Send();
-        $sendMessage->setUserIds($this->getGroupMembers($this->groupId));
-        $sendMessage->setMessage($message);
+//        $sendMessage = new Send();
+//        $sendMessage->setUserIds($this->getGroupMembers($this->groupId));
+//        $sendMessage->setMessage($message);
         //$result = $this->executorApiMethods($sendMessage);
         //return json_decode($result->getBody());
 
 
 
 
-//        $upload = new GetMessagesUploadServer();
-//        $upload->setPeerId('27727178');
-//        $result = $this->executorApiMethods($upload);
-//        $uploadBody = json_decode($result->getBody());
-//        $url = $uploadBody->response->upload_url;
+        $upload = new GetMessagesUploadServer();
+        $upload->setPeerId('215007720');
+        $result = $this->executorApiMethods($upload);
+        $uploadBody = json_decode($result->getBody());
+        $url = $uploadBody->response->upload_url;
 //
-//        $sendFile = new SendFileToServer();
-//        $sendFile->setUrl($url);
-//        $sendFile->setPhoto($file);
-//        $result = $sendFile->getResponse($sendFile->getRequest());
-//        //$result = $this->executorApiMethods($sendFile);
-//        var_dump((json_decode($result->getBody())));
+        $sendFile = new SendFileToServer();
+        $sendFile->setUrl($url);
+        $sendFile->setPhoto($file);
+        $result = $sendFile->getResponse($sendFile->getRequest());
+        //$result = $this->executorApiMethods($sendFile);
+        $data = json_decode($result->getBody());
+        $photo = $data->photo;
+        $hash = $data->hash;
+        $server = $data->server;
+
+        $saveMess = new SaveMessagesPhoto();
+        $saveMess->setPhoto($photo);
+        $saveMess->setHash($hash);
+        $saveMess->setServer($server);
+        $result = $this->executorApiMethods($saveMess);
+        $data = json_decode($result->getBody());
+        var_dump($data);
+
+        $photo = 'photo' . $data->response[0]->owner_id . '_' . $data->response[0]->id;
+        $sendMessage = new Send();
+        $sendMessage->setUserId('215007720');
+        $sendMessage->setMessage('asdasd');
+        $sendMessage->setAttachment($photo);
+        $result = $this->executorApiMethods($sendMessage);
+
 //
 //
 //        die();
@@ -108,7 +128,7 @@ class VkApiService
         // foreach getmembers для каждого члена группы
 
         $typingClass = new SetActivity();
-        $typingClass->setUserId('27727178');
+        $typingClass->setUserId('215007720');
         $typingClass->setType(SetActivity::TYPE_TYPING);
 //        $typingClass->setGroupId('189861095');
 //        //var_dump($sendClass->getResponse($sendClass->getRequest()));
